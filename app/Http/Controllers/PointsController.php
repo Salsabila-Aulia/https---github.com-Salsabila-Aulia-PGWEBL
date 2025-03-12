@@ -41,7 +41,6 @@ class PointsController extends Controller
             'description' => $request->description,
         ];
 
-        dd($data);
         //insert data
         $this->points->create($data);
 
