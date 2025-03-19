@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PoligonsModels extends Model
+class PolygonsModels extends Model
 {
-    protected $table = 'poligons';
+    protected $table = 'polygons';
 
     protected $guarded = ['id'];
 }
