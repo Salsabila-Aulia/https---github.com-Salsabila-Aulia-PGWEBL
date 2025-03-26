@@ -17,22 +17,22 @@
 @section('content')
     <div id="map"></div>
 
-    <!-- Modal Point-->
-    <div class="modal fade" id="createpointModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Create Point -->
+    <div class="modal fade" id="CreatePointModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Create Point</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ route('point.store') }}">
+                <form method="POST" action="{{ route('points.store') }}">
                     <div class="modal-body">
                         @csrf
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Fill point name" required>
+                                placeholder="fill point name">
                         </div>
 
                         <div class="mb-3">
@@ -92,6 +92,7 @@
             </div>
         </div>
     </div>
+
     <!-- Modal Create Polygon -->
     <div class="modal fade" id="CreatePolygonModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -138,6 +139,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     <script src="https://unpkg.com/@terraformer/wkt"></script>
 
     <script>
@@ -146,7 +148,6 @@
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-
 
         /* Digitize Function */
         var drawnItems = new L.FeatureGroup();
@@ -206,5 +207,71 @@
 
             drawnItems.addLayer(layer);
         });
+
+        //GeoJSON Points
+        var point = L.geoJson(null, {
+				onEachFeature: function (feature, layer) {
+					var popupContent = "Nama: " + feature.properties.name + "<br>" +
+						"Description: " + feature.properties.description + "<br>" +
+                        "Dibuat: " + feature.properties.created_at;
+					layer.on({
+						click: function (e) {
+							point.bindPopup(popupContent);
+						},
+						mouseover: function (e) {
+							point.bindTooltip(feature.properties.name);
+						},
+					});
+				},
+			});
+			$.getJSON("{{ route('api.points') }}", function (data) {
+				point.addData(data);
+				map.addLayer(point);
+			});
+
+        //GeoJSON Polylines
+        var polyline = L.geoJson(null, {
+				onEachFeature: function (feature, layer) {
+					var popupContent = "Nama: " + feature.properties.name + "<br>" +
+						"Description: " + feature.properties.description + "<br>" +
+                        "Panjang: " + feature.properties.length_km.toFixed(2) + "<br>" +
+                        "Dibuat: " + feature.properties.created_at;
+					layer.on({
+						click: function (e) {
+							polyline.bindPopup(popupContent);
+						},
+						mouseover: function (e) {
+							polyline.bindTooltip(feature.properties.name);
+						},
+					});
+				},
+			});
+			$.getJSON("{{ route('api.polylines') }}", function (data) {
+				polyline.addData(data);
+				map.addLayer(polyline);
+			});
+
+        //GeoJSON Polygons
+        var polygon = L.geoJson(null, {
+				onEachFeature: function (feature, layer) {
+					var popupContent = "Nama: " + feature.properties.name + "<br>" +
+						"Description: " + feature.properties.description + "<br>" +
+                        "Luas: " + feature.properties.luas_hektar.toFixed(2) + "<br>" +
+                        "Dibuat: " + feature.properties.created_at;
+					layer.on({
+						click: function (e) {
+							polygon.bindPopup(popupContent);
+						},
+						mouseover: function (e) {
+							polygon.bindTooltip(feature.properties.name);
+						},
+					});
+				},
+			});
+			$.getJSON("{{ route('api.polygons') }}", function (data) {
+				polygon.addData(data);
+				map.addLayer(polygon);
+			});
+
     </script>
 @endsection

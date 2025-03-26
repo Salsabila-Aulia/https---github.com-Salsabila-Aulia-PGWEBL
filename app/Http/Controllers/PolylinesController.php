@@ -44,7 +44,7 @@ class PolylinesController extends Controller
                         'name.required' => 'Name is required',
                         'name.unique' => 'Name already exists',
                         'description.required' => 'Description is required',
-                        'geom_polyline.required' => 'Geometry Polyline is required',
+                        'geom_polyline.required' => 'Geometry Point is required',
                     ]
                 );
 
