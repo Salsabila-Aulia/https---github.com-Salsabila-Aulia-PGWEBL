@@ -13,7 +13,9 @@ class PointsModel extends Model
 
     public function geojson_points()
     {
-        $points = $this->select(DB::raw('id, ST_AsGeoJSON(geom) as geom, name, description, created_at, updated_at'))->get();
+        $points = $this
+            ->select(DB::raw('st_asgeojson(geom) as geom, name, description, image, created_at, updated_at'))
+            ->get();
 
         $geojson = [
             'type' => 'FeatureCollection',
@@ -26,14 +28,16 @@ class PointsModel extends Model
                 'geometry' => json_decode($p->geom),
                 'properties' => [
                     'name' => $p->name,
-                    'description' => $p->description,
+                    'description'=> $p->description,
                     'created_at' => $p->created_at,
                     'updated_at' => $p->updated_at,
+                    'image' => $p->image,
                 ],
             ];
 
             array_push($geojson['features'], $feature);
         }
+
         return $geojson;
     }
 }

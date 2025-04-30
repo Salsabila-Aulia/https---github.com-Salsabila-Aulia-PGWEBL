@@ -10,7 +10,7 @@ Route::get('/', [PointsController::class, 'index'])-> name('map');
 
 Route::get('/table', [TableController::class, 'index'])-> name('table');
 
-Route::resource('point', PointsController::class);
+Route::resource('points', PointsController::class);
 
 Route::resource('polylines', PolylinesController::class);
 

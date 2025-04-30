@@ -33,34 +33,50 @@ class PolylinesController extends Controller
      */
     public function store(Request $request)
     {
-                // Validate request
-                $request->validate(
-                    [
-                        'name' => 'required|unique:polylines,name',
-                        'description' => 'required',
-                        'geom_polyline' => 'required',
-                    ],
-                    [
-                        'name.required' => 'Name is required',
-                        'name.unique' => 'Name already exists',
-                        'description.required' => 'Description is required',
-                        'geom_polyline.required' => 'Geometry Point is required',
-                    ]
-                );
+        // Validate request
+        $request->validate(
+            [
+                'name' => 'required|unique:polylines,name',
+                'description' => 'required',
+                'geom_polyline' => 'required',
+                'image' => 'nullable|mimes:jpeg,png,gif,svg|max:2000',
+            ],
+            [
+                'name.required' => 'Name is required',
+                'name.unique' => 'Name already exists',
+                'description.required' => 'Description is required',
+                'geom_polyline.required' => 'Geometry Point is required',
+            ]
+        );
 
-                $data = [
-                    'geom' => $request->geom_polyline,
-                    'name' => $request->name,
-                    'description' => $request->description,
-                ];
+        // Create image directory if not exist
+        if (!is_dir('storage/images')) {
+            mkdir('./storage/images', 0777);
+        }
 
-                // Create data
-                if (!$this->polylines->create($data)) {
-                    return redirect()->route('map')->with('error', 'Polyline failed to add');
-                }
+        // Get image file
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name_image = time() . "_polyline." . strtolower($image->getClientOriginalExtension());
+            $image->move('storage/images', $name_image);
+        } else {
+            $name_image = null;
+        }
 
-                // Redirect to map
-                return redirect()->route('map')->with('success', 'Polyline has been added');
+        $data = [
+            'geom' => $request->geom_polyline,
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' =>$name_image,
+        ];
+
+        // Create data
+        if (!$this->polylines->create($data)) {
+            return redirect()->route('map')->with('error', 'Polyline failed to add');
+        }
+
+        // Redirect to map
+        return redirect()->route('map')->with('success', 'Polyline has been added');
     }
 
     /**
