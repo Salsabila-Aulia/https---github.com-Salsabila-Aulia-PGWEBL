@@ -10,8 +10,9 @@ class PolygonsController extends Controller
 {
     public function __construct()
     {
-        $this->polygons = new PolygonsModels();
+        $this->polygons = new PolygonsModel();
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -39,17 +40,17 @@ class PolygonsController extends Controller
                 'name' => 'required|unique:polygons,name',
                 'description' => 'required',
                 'geom_polygon' => 'required',
-                'image' => 'nullable|mimes:jpeg,png,gif,svg|max:2000',
+                'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2000',
             ],
             [
                 'name.required' => 'Name is required',
                 'name.unique' => 'Name already exists',
-                'description.required' => 'Description is required',
-                'geom_polygon.required' => 'Geometry Polygons is required',
+                'description.required'=> 'Description is required',
+                'geom_polygon.required' => 'Geometry Polygon is required',
             ]
         );
 
-        // Create image directory if not exist
+        // Create images directory if not exists
         if (!is_dir('storage/images')) {
             mkdir('./storage/images', 0777);
         }
@@ -67,7 +68,7 @@ class PolygonsController extends Controller
             'geom' => $request->geom_polygon,
             'name' => $request->name,
             'description' => $request->description,
-            'image' =>$name_image,
+            'image' => $name_image,
         ];
 
         // Create data
@@ -92,7 +93,12 @@ class PolygonsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = [
+            'title' => 'Edit Polygon',
+            'id' => $id,
+        ];
+
+        return view('edit-polygon', $data);
     }
 
     /**
@@ -108,6 +114,19 @@ class PolygonsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $imagefile  = $this->polygons->find($id)->image;
+
+        if (!$this->polygons->destroy($id)) {
+            return redirect()->route('map')->with('error', 'Polygon failed to delete');
+        }
+
+        // Delete image file
+        if ($imagefile != null) {
+            if (file_exists('./storage/images/' . $imagefile)) {
+                unlink('./storage/images/' . $imagefile);
+            }
+        }
+
+        return redirect()->route('map')->with('success', 'Polygon has been deleted');
     }
 }
