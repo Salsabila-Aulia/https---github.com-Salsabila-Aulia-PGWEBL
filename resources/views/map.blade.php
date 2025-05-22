@@ -255,7 +255,7 @@
                     "<div class='col-6'>" +
                         "<form method='POST' action='" + routedelete + "'>" +
                         '@csrf' + '@method('DELETE')' +
-                        "<button type='submit' class= 'btn btn-danger btn-sm' onclick='return confirm(Yakin akan dihapus?)'><i class='fa-solid fa-trash-can'></i></button>" +
+                        "<button type='submit' class= 'btn btn-danger btn-sm' onclick='return confirm(`Yakin akan dihapus?`)''><i class='fa-solid fa-trash-can'></i></button>" +
                         "</form>" +
                     "</div>" +
                 "</div>";
@@ -297,7 +297,7 @@
                     "<div class='col-6'>" +
                         "<form method='POST' action='" + routedelete + "'>" +
                         '@csrf' + '@method('DELETE')' +
-                        "<button type='submit' class= 'btn btn-danger btn-sm' onclick='return confirm(Yakin akan dihapus?)'><i class='fa-solid fa-trash-can'></i></button>" +
+                        "<button type='submit' class= 'btn btn-danger btn-sm'onclick='return confirm(`Yakin akan dihapus?`)'><i class='fa-solid fa-trash-can'></i></button>" +
                         "</form>" +
                     "</div>" +
                 "</div>";
@@ -339,11 +339,11 @@
                     "<div class='col-6'>" +
                         "<form method='POST' action='" + routedelete + "'>" +
                         '@csrf' + '@method('DELETE')' +
-                        "<button type='submit' class= 'btn btn-danger btn-sm' onclick='return confirm(Yakin akan dihapus?)'><i class='fa-solid fa-trash-can'></i></button>" +
+                        "<button type='submit' class= 'btn btn-danger btn-sm' onclick='return confirm(`Yakin akan dihapus?`)'><i class='fa-solid fa-trash-can'></i></button>" +
                         "</form>" +
                     "</div>" +
                 "</div>";
-                
+
                 layer.on({
                     click: function(e) {
                         polygon.bindPopup(popupContent);
