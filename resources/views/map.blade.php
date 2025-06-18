@@ -259,7 +259,7 @@
                     "<button type='submit' class= 'btn btn-danger btn-sm' onclick='return confirm(`Yakin akan dihapus?`)''><i class='fa-solid fa-trash-can'></i></button>" +
                     "</form>" +
                     "</div>" +
-                    "</div>" + "<br>" + "<p>Dibuat oleh: Salsabila" + feature.properties.user_created + "</p>";
+                    "</div>" + "<br>" + "<p>Dibuat Oleh: " + feature.properties.user_created + "</p>"
 
                 layer.on({
                     click: function(e) {
@@ -302,7 +302,7 @@
                     "<button type='submit' class= 'btn btn-danger btn-sm'onclick='return confirm(`Yakin akan dihapus?`)'><i class='fa-solid fa-trash-can'></i></button>" +
                     "</form>" +
                     "</div>" +
-                    "</div>" + "<br>" + "<p>Dibuat oleh: Salsabila" + feature.properties.user_created + "</p>";
+                    "</div>" + "<br>" + "<p>Dibuat Oleh: " + feature.properties.user_created + "</p>"
 
                 layer.on({
                     click: function(e) {
@@ -345,7 +345,7 @@
                     "<button type='submit' class= 'btn btn-danger btn-sm' onclick='return confirm(`Yakin akan dihapus?`)'><i class='fa-solid fa-trash-can'></i></button>" +
                     "</form>" +
                     "</div>" +
-                    "</div>" + "<br>" + "<p>Dibuat oleh: Salsabila" + feature.properties.user_created + "</p>";
+                    "</div>" + "<br>" + "<p>Dibuat Oleh: " + feature.properties.user_created + "</p>"
 
                 layer.on({
                     click: function(e) {
