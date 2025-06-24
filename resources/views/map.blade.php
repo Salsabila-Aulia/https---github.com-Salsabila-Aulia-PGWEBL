@@ -168,11 +168,16 @@
     <script src="https://unpkg.com/@terraformer/wkt"></script>
 
     <script>
-        var map = L.map('map').setView([-7.777457079987586, 110.37388215598828], 13);
+        var map = L.map('map').setView([-5.8796, 110.4329], 13);
 
+        //Basemap OSM
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        })
+        esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/' +
+            'World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '&copy; Esri'
+            }).addTo(map);
 
         /* Digitize Function */
         var drawnItems = new L.FeatureGroup();

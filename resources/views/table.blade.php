@@ -1,12 +1,12 @@
 @extends('layout.template')
 
 @section('content')
-<div class="container mt-4 mb-4">
-    <div class="card">
-        <div class="card-header">
-            <h4>Data Point</h4>
-        </div>
-        <div class="card-body">
+    <div class="container mt-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h4>Points Table</h4>
+            </div>
+            <div class="card-body"></div>
             <table class="table table-striped" id="pointstable">
                 <thead>
                     <tr>
@@ -35,12 +35,12 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <h4>Data Polyline</h4>
-        </div>
-        <div class="card-body">
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Polyline Table</h4>
+            </div>
+            <div class="card-body"></div>
             <table class="table table-striped" id="polylinestable">
                 <thead>
                     <tr>
@@ -69,12 +69,12 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <h4>Data Polygon</h4>
-        </div>
-        <div class="card-body">
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Polygon Table</h4>
+            </div>
+            <div class="card-body"></div>
             <table class="table table-striped" id="polygonstable">
                 <thead>
                     <tr>
@@ -104,7 +104,6 @@
             </table>
         </div>
     </div>
-    </div>
 @endsection
 
 @section('styles')
@@ -115,8 +114,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#pointstable');
-        let table = new DataTable('#polylinestable');
-        let table = new DataTable('#polygonstable');
+        let tablepoints = new DataTable('#pointstable');
+        let tablepolylines = new DataTable('#polylinestable');
+        let tablepolygons = new DataTable('#polygonstable');
     </script>
 @endsection

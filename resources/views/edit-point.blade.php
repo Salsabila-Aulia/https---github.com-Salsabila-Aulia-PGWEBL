@@ -18,7 +18,7 @@
     <div id="map"></div>
 
     <!-- Modal Edit Point -->
-    <div class="modal fade" id="EditPointModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editpointModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -32,7 +32,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="fill point name">
+                                placeholder="Fill point name">
                         </div>
 
                         <div class="mb-3">
@@ -64,6 +64,7 @@
     </div>
 @endsection
 
+
 @section('scripts')
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -75,13 +76,13 @@
     <script src="https://unpkg.com/@terraformer/wkt"></script>
 
     <script>
-        var map = L.map('map').setView([-7.777457079987586, 110.37388215598828], 13);
+        var map = L.map('map').setView([-5.8796, 110.4329], 13);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        //Digitize Function
+        /* Digitize Function */
         var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
 
@@ -119,15 +120,16 @@
                 $('#preview-image-point').attr('src', "{{ asset('storage/images') }}/" + properties.image);
 
                 // menampilkan modal edit
-                $('#EditPointModal').modal('show');
+                $('#editpointModal').modal('show');
 
             });
         });
 
-        // Load GeoJSON Points
+        // GeoJSON Points
         var point = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
 
+                // memasukkan layer point ke dalam drawnItems
                 drawnItems.addLayer(layer);
 
                 var properties = feature.properties;
@@ -135,7 +137,6 @@
 
                 layer.on({
                     click: function(e) {
-
                         // menampilkan data ke dalam modal
                         $('#name').val(properties.name);
                         $('#description').val(properties.description);
@@ -144,12 +145,9 @@
                             properties.image);
 
                         // menampilkan modal edit
-                        $('#EditPointModal').modal('show');
-
-
+                        $('#editpointModal').modal('show');
                     },
                 });
-
             },
         });
         $.getJSON("{{ route('api.point', $id) }}", function(data) {
